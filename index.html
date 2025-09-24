@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Assistant AI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>🤖 Assistant AI</h1>
+    <p class="sub">Your little web buddy — type a command and click <strong>Ask</strong>.</p>
+  </header>
+
+  <main class="container">
+    <label for="userInput" class="label">Say something</label>
+    <input id="userInput" class="input" placeholder="e.g. Set alarm for 7am" />
+    <div class="row">
+      <button id="askBtn" class="btn">Ask</button>
+      <button id="clearBtn" class="btn ghost">Clear</button>
+    </div>
+
+    <section id="output" class="output">
+      <p class="hint">Responses will show here.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Made for King — add to home screen for app-like use</small>
+  </footer>
+
+  <script>
+    const askBtn = document.getElementById('askBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const input = document.getElementById('userInput');
+    const output = document.getElementById('output');
+
+    // Simple front-end parser (works offline)
+    function simpleReply(text) {
+      text = text.toLowerCase();
+      if (!text) return "Say something first 😉";
+      if (text.includes('hi') || text.includes('hello')) return "Hey! 👋 What's up?";
+      if (text.includes('name')) return "I am Assistant AI 🤖";
+      if (text.includes('alarm')) return "Okay — pretend I set an alarm for you ⏰ (you'll need a real clock app to actually set it).";
+      if (text.includes('sms') || text.includes('message')) return "I can help draft an SMS. Try: 'Send sms to Mom: I'll be late.'";
+      return "Cool idea — but I don't know how to do that yet. Try simpler commands.";
+    }
+
+    askBtn.addEventListener('click', () => {
+      const txt = input.value.trim();
+      output.innerHTML = '<pre class="resp">' + simpleReply(txt) + '</pre>';
+    });
+
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      output.innerHTML = '<p class="hint">Responses will show here.</p>';
+      input.focus();
+    });
+
+    // allow enter key
+    input.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') askBtn.click();
+    });
+  </script>
+</body>
+</html>
